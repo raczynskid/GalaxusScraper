@@ -30,6 +30,7 @@ def extract_location(description: str) -> str:
 
 def get_feed():
     all_events = []
+    driver.execute_script("window.scrollBy(5000,40)")
     for transaction in driver.find_elements(By.XPATH, "//aside/section/div/div/div/div/div")[:4]:
         timestamp = transaction.find_element(By.XPATH, "div[1]/span[@type]").text
         event_type = transaction.find_element(By.XPATH, "div/span[@type]").get_attribute('type')
@@ -61,3 +62,5 @@ def get_feed():
 
 result = get_feed()
 result
+
+# TODO move to RPi
