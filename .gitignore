@@ -1,2 +1,2 @@
 /.venv
-geckodriver.exe
+/__pycache__
