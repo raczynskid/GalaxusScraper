@@ -67,7 +67,4 @@ def get_feed():
             price = None
     return all_events
 
-result = get_feed()
-result
-
 # TODO move to RPi
