@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 from dataclasses import dataclass
 
 
@@ -14,6 +17,9 @@ class Transaction:
     location: str = None
     url: str = None
     description: str = None
+
+    def format_as_tuple(self):
+        return(self.timestamp, self.event_type, self.product, self.supplier, self.price, self.location, self.url, self.description)
 
 def set_webdriver():
     options = webdriver.ChromeOptions()
@@ -30,6 +36,7 @@ def extract_location(description: str) -> str:
 
 def get_feed():
     all_events = []
+    driver.implicitly_wait(3)
     driver.execute_script("window.scrollBy(5000,40)")
     for transaction in driver.find_elements(By.XPATH, "//aside/section/div/div/div/div/div")[:4]:
         timestamp = transaction.find_element(By.XPATH, "div[1]/span[@type]").text
@@ -45,7 +52,7 @@ def get_feed():
                 supplier = None
                 price = None
 
-        except:
+        except NoSuchElementException:
             product_name = None
             url = None
             supplier = None
